@@ -17,7 +17,6 @@ from flamapy.metamodels.pysat_metamodel.operations.pysat_valid import PySATValid
 from flamapy.metamodels.pysat_metamodel.operations.pysat_filter import PySATFilter
 from flamapy.metamodels.pysat_metamodel.operations.pysat_valid_configuration import PySATValidConfiguration
 from flamapy.metamodels.pysat_metamodel.operations.pysat_valid_product import PySATValidProduct
-from flamapy.metamodels.pysat_metamodel.operations.pysat_error_detection import PySATErrorDetection
 
 # This fixture is used to initialize the model, and it can be scoped to each function.
 # You may also parameterize this fixture if you have different setups for different tests.
@@ -254,25 +253,6 @@ def test_valid_product_operation(setup_model, expected_output,configuration):
     model = setup_model
     operation = PySATValidProduct()
     operation.set_configuration(configuration)
-    operation.execute(model)
-    result = operation.is_valid()
-
-    assert result == expected_output, f"The result {result} does not match the expected output {expected_output, str(configuration)}"
-
-@pytest.mark.parametrize("setup_model, expected_output", [
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case1/df-case1.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case2/df-case2.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case3/df-case3.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case4/df-case4.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case5/df-case5.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case6/df-case6.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case7/df-case7.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-    ("./resources/models/fama_test_suite/error-guessing/dead-features/case8/df-case8.xml", True, Configuration({Feature("A"):True,Feature("B"):True,Feature("D"):True,Feature("C"):True,Feature("F"):True})),
-   ], indirect=["setup_model"])
-def test_valid_product_operation(setup_model, expected_output):
-    model = setup_model
-    operation = PySAT3Diagnosis()
-
     operation.execute(model)
     result = operation.is_valid()
 
